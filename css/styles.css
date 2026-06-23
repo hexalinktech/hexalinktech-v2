@@ -701,5 +701,45 @@ grid-template-columns:1fr;
 font-size:32px;
 
 }
+{
+/* =========================================
+   ANIMACIONES SCROLL
+========================================= */
 
+.card,
+.benefit-card,
+.hex-card{
+
+opacity:0;
+
+transform:translateY(30px);
+
+transition:
+opacity .6s ease,
+transform .6s ease;
+
+}
+
+.card.show,
+.benefit-card.show,
+.hex-card.show{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+/* =========================================
+   HEADER SCROLL
+========================================= */
+
+header.scrolled{
+
+background:rgba(2,6,23,.98);
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.35);
+
+}
 }
