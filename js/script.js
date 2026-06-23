@@ -1,116 +1,135 @@
-/* =========================================
-   MENU MOVIL
-========================================= */
+(function () {
+    "use strict";
 
-const menuToggle = document.querySelector(".menu-toggle");
-const navMenu = document.querySelector("#navMenu");
+    const body = document.body;
+    const header = document.getElementById("siteHeader");
+    const navToggle = document.getElementById("navToggle");
+    const primaryNav = document.getElementById("primaryNav");
+    const navLinks = document.querySelectorAll(".nav-link");
+    const internalLinks = document.querySelectorAll('a[href^="#"]');
+    const revealItems = document.querySelectorAll(".reveal");
 
-if (menuToggle && navMenu) {
+    const closeMenu = () => {
+        body.classList.remove("nav-open");
 
-    menuToggle.addEventListener("click", () => {
+        if (navToggle) {
+            navToggle.setAttribute("aria-expanded", "false");
+            navToggle.setAttribute("aria-label", "Abrir menu de navegacion");
+        }
+    };
 
-        navMenu.classList.toggle("active");
+    const openMenu = () => {
+        body.classList.add("nav-open");
 
-    });
+        if (navToggle) {
+            navToggle.setAttribute("aria-expanded", "true");
+            navToggle.setAttribute("aria-label", "Cerrar menu de navegacion");
+        }
+    };
 
-}
-
-/* =========================================
-   CERRAR MENU AL SELECCIONAR OPCION
-========================================= */
-
-const navLinks = document.querySelectorAll("#navMenu a");
-
-navLinks.forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        navMenu.classList.remove("active");
-
-    });
-
-});
-
-/* =========================================
-   HEADER SCROLL EFFECT
-========================================= */
-
-window.addEventListener("scroll", () => {
-
-    const header = document.querySelector("header");
-
-    if (window.scrollY > 50) {
-
-        header.classList.add("scrolled");
-
-    } else {
-
-        header.classList.remove("scrolled");
-
-    }
-
-});
-
-/* =========================================
-   REVEAL ON SCROLL
-========================================= */
-
-const revealElements = document.querySelectorAll(
-".card, .benefit-card, .hex-card"
-);
-
-const revealObserver = new IntersectionObserver(
-
-(entries) => {
-
-    entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-
-            entry.target.classList.add("show");
-
+    const toggleMenu = () => {
+        if (body.classList.contains("nav-open")) {
+            closeMenu();
+            return;
         }
 
-    });
+        openMenu();
+    };
 
-},
-{
-    threshold: 0.15
-}
+    const updateHeader = () => {
+        if (!header) {
+            return;
+        }
 
-);
+        header.classList.toggle("scrolled", window.scrollY > 24);
+    };
 
-revealElements.forEach(element => {
+    const updateActiveLink = () => {
+        const sections = Array.from(navLinks)
+            .map((link) => {
+                const target = document.querySelector(link.getAttribute("href"));
+                return target ? { link, target } : null;
+            })
+            .filter(Boolean);
 
-    revealObserver.observe(element);
+        let currentLink = sections[0] ? sections[0].link : null;
+        const offset = 140;
 
-});
+        sections.forEach(({ link, target }) => {
+            if (target.offsetTop - offset <= window.scrollY) {
+                currentLink = link;
+            }
+        });
 
-/* =========================================
-   SCROLL SUAVE BOTONES INTERNOS
-========================================= */
+        navLinks.forEach((link) => {
+            link.classList.toggle("active", link === currentLink);
+        });
+    };
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    if (navToggle && primaryNav) {
+        navToggle.addEventListener("click", toggleMenu);
+    }
 
-    anchor.addEventListener("click", function (e) {
+    internalLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+            const targetId = link.getAttribute("href");
 
-        const targetId = this.getAttribute("href");
+            if (!targetId || targetId === "#") {
+                return;
+            }
 
-        const target = document.querySelector(targetId);
+            const target = document.querySelector(targetId);
 
-        if (target) {
+            if (!target) {
+                return;
+            }
 
-            e.preventDefault();
-
+            event.preventDefault();
+            closeMenu();
             target.scrollIntoView({
                 behavior: "smooth",
                 block: "start"
             });
-
-        }
-
+        });
     });
 
-});
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMenu();
+        }
+    });
 
-console.log("HexaLink Tech v3.0 cargado correctamente");
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 1080) {
+            closeMenu();
+        }
+    });
+
+    window.addEventListener("scroll", () => {
+        updateHeader();
+        updateActiveLink();
+    }, { passive: true });
+
+    if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            });
+        }, {
+            threshold: 0.14,
+            rootMargin: "0px 0px -60px 0px"
+        });
+
+        revealItems.forEach((item) => revealObserver.observe(item));
+    } else {
+        revealItems.forEach((item) => item.classList.add("visible"));
+    }
+
+    updateHeader();
+    updateActiveLink();
+})();
