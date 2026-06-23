@@ -79,20 +79,20 @@ nav a:hover{
 color:#facc15;
 }
 
-.header-btn{
+.cta-header{
 padding:14px 28px;
-border:2px solid #facc15;
-color:#facc15;
-text-decoration:none;
-border-radius:8px;
+border:2px solid #ffcc00;
+border-radius:10px;
+color:#ffcc00;
 font-weight:600;
+text-decoration:none;
 transition:.3s;
 }
-
-.header-btn:hover{
-background:#facc15;
+.cta-header:hover{
+background:#ffcc00;
 color:#000;
 }
+
 
 .menu-toggle{
 display:none;
