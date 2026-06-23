@@ -46,7 +46,8 @@ gap:15px;
 }
 
 .logo img{
-height:65px;
+height:72px;
+width:auto;
 }
 
 .logo-text h2{
@@ -118,9 +119,9 @@ inset:0;
 background:
 linear-gradient(
 90deg,
-rgba(0,0,0,.85) 25%,
-rgba(0,0,0,.35) 60%,
-rgba(0,0,0,.15) 100%
+rgba(0,0,0,.72) 25%,
+rgba(0,0,0,.30) 60%,
+rgba(0,0,0,.10) 100%
 );
 }
 
@@ -135,7 +136,7 @@ gap:60px;
 }
 
 .hero-left{
-max-width:700px;
+max-width:620px;
 }
 
 .hero-tags{
@@ -217,12 +218,10 @@ gap:20px;
 }
 
 .hex-card{
-background:rgba(17,24,39,.85);
+background:rgba(15,23,42,.75);
 border:1px solid rgba(250,204,21,.25);
-padding:25px;
-border-radius:18px;
-text-align:center;
-transition:.3s;
+backdrop-filter:blur(12px);
+border-radius:22px;
 }
 
 .hex-card:hover{
