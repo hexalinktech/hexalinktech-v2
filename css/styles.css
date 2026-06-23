@@ -1,6 +1,6 @@
-/* =========================
+/* ========================================
    RESET
-========================= */
+======================================== */
 
 *{
 margin:0;
@@ -15,25 +15,25 @@ scroll-behavior:smooth;
 body{
 font-family:'Poppins',sans-serif;
 background:#050816;
-color:#ffffff;
-line-height:1.6;
+color:white;
 overflow-x:hidden;
 }
 
-/* =========================
+/* ========================================
    HEADER
-========================= */
+======================================== */
 
 header{
 position:fixed;
 top:0;
 left:0;
 width:100%;
-padding:18px 8%;
+height:90px;
+padding:0 5%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:rgba(5,8,22,.85);
+background:rgba(5,8,22,.92);
 backdrop-filter:blur(12px);
 z-index:1000;
 border-bottom:1px solid rgba(255,255,255,.05);
@@ -42,25 +42,34 @@ border-bottom:1px solid rgba(255,255,255,.05);
 .logo{
 display:flex;
 align-items:center;
-gap:18px;
-font-size:20px;
+gap:15px;
+}
+
+.logo img{
+height:65px;
+}
+
+.logo-text h2{
+font-size:34px;
+line-height:1;
+font-weight:700;
+color:#fff;
+}
+
+.logo-text span{
+font-size:28px;
 font-weight:700;
 color:#facc15;
 }
 
-.logo img{
-height:55px;
-width:auto;
-}
-
 nav{
 display:flex;
-gap:25px;
+gap:35px;
 }
 
 nav a{
-color:white;
 text-decoration:none;
+color:white;
 font-weight:500;
 transition:.3s;
 }
@@ -69,34 +78,47 @@ nav a:hover{
 color:#facc15;
 }
 
+.header-btn{
+padding:14px 28px;
+border:2px solid #facc15;
+color:#facc15;
+text-decoration:none;
+border-radius:8px;
+font-weight:600;
+transition:.3s;
+}
+
+.header-btn:hover{
+background:#facc15;
+color:#000;
+}
+
 .menu-toggle{
 display:none;
-font-size:26px;
+font-size:28px;
 cursor:pointer;
 }
 
-/* =========================
+/* ========================================
    HERO
-========================= */
+======================================== */
 
 .hero{
 position:relative;
-min-height:90vh;
+min-height:100vh;
+background:url("../images/hero-bg.jpg") center center/cover no-repeat;
 display:flex;
 align-items:center;
-padding:180px 8% 80px;
-background:url("../images/hero-bg.jpg") center center / cover no-repeat;
-overflow:hidden;
+padding:140px 5% 80px;
 }
 
-.hero::before{
-content:"";
+.hero-overlay{
 position:absolute;
 inset:0;
 background:
 linear-gradient(
 90deg,
-rgba(0,0,0,.78) 25%,
+rgba(0,0,0,.85) 25%,
 rgba(0,0,0,.35) 60%,
 rgba(0,0,0,.15) 100%
 );
@@ -105,146 +127,198 @@ rgba(0,0,0,.15) 100%
 .hero-content{
 position:relative;
 z-index:2;
-max-width:650px;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:60px;
+}
+
+.hero-left{
+max-width:700px;
+}
+
+.hero-tags{
+display:flex;
+gap:25px;
+margin-bottom:25px;
+flex-wrap:wrap;
+}
+
+.hero-tags span{
+color:#facc15;
+font-size:14px;
+font-weight:600;
 }
 
 .hero h1{
-font-size:58px;
-line-height:1.1;
-margin-bottom:15px;
+font-size:76px;
+line-height:1.05;
+font-weight:800;
+margin-bottom:25px;
 }
 
-.hero span{
+.hero h1 span{
 color:#facc15;
-}
-
-.hero h2{
-color:#facc15;
-margin-bottom:20px;
-font-size:24px;
 }
 
 .hero p{
-font-size:18px;
-color:#cbd5e1;
-margin-bottom:35px;
+font-size:22px;
+color:#dbe4f0;
+max-width:700px;
+margin-bottom:40px;
 }
 
 .hero-buttons{
 display:flex;
-gap:15px;
+gap:20px;
 flex-wrap:wrap;
 }
 
-/* =========================
-   BOTONES
-========================= */
-
-.btn{
+.btn-primary{
 background:#facc15;
 color:#000;
-padding:14px 28px;
-border-radius:8px;
+padding:18px 34px;
+border-radius:10px;
+font-weight:700;
 text-decoration:none;
-font-weight:600;
-transition:.3s;
-display:inline-block;
+display:flex;
+align-items:center;
+gap:10px;
+box-shadow:0 0 25px rgba(250,204,21,.4);
 }
 
-.btn:hover{
-transform:translateY(-3px);
-}
-
-.btn-outline{
+.btn-secondary{
 border:2px solid #facc15;
 color:#facc15;
-padding:14px 28px;
-border-radius:8px;
+padding:18px 34px;
+border-radius:10px;
+font-weight:700;
 text-decoration:none;
-font-weight:600;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+/* ========================================
+   HERO SERVICES
+======================================== */
+
+.hero-right{
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.hero-services{
+display:grid;
+grid-template-columns:repeat(2,220px);
+gap:20px;
+}
+
+.hex-card{
+background:rgba(17,24,39,.85);
+border:1px solid rgba(250,204,21,.25);
+padding:25px;
+border-radius:18px;
+text-align:center;
 transition:.3s;
-display:inline-block;
 }
 
-.btn-outline:hover{
-background:#facc15;
-color:#000;
+.hex-card:hover{
+transform:translateY(-5px);
+border-color:#facc15;
 }
 
-.glow{
-box-shadow:
-0 0 15px rgba(250,204,21,.6),
-0 0 35px rgba(250,204,21,.3);
+.hex-card i{
+font-size:36px;
+color:#facc15;
+margin-bottom:15px;
 }
 
-/* =========================
-   SECCIONES
-========================= */
+.hex-card h3{
+font-size:15px;
+}
+
+/* ========================================
+   BENEFITS
+======================================== */
+
+.benefits{
+padding:40px 5%;
+background:#020617;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:25px;
+}
+
+.benefit-card{
+background:#0f172a;
+padding:30px;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.benefit-card i{
+font-size:36px;
+color:#facc15;
+margin-bottom:15px;
+}
+
+.benefit-card h3{
+margin-bottom:10px;
+}
+
+/* ========================================
+   SECTIONS
+======================================== */
 
 .section{
-padding:110px 8%;
+padding:100px 5%;
 }
 
 .section h2{
+font-size:42px;
 text-align:center;
-font-size:38px;
 margin-bottom:60px;
 }
 
-/* =========================
+/* ========================================
    GRID
-========================= */
+======================================== */
 
 .grid{
 display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(260px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:30px;
 }
-
-/* =========================
-   CARDS
-========================= */
 
 .card{
 background:#111827;
 padding:30px;
-border-radius:14px;
+border-radius:18px;
 text-align:center;
 border:1px solid rgba(255,255,255,.05);
-transition:.35s;
-opacity:0;
-transform:translateY(35px);
-}
-
-.card.show{
-opacity:1;
-transform:translateY(0);
+transition:.3s;
 }
 
 .card:hover{
-transform:translateY(-8px);
+transform:translateY(-6px);
 border-color:#facc15;
-box-shadow:
-0 0 25px rgba(250,204,21,.15);
 }
 
 .card i{
-font-size:42px;
+font-size:45px;
 color:#facc15;
 margin-bottom:20px;
 }
 
-.card h3{
-margin-bottom:10px;
-}
-
-/* =========================
+/* ========================================
    FORMULARIO
-========================= */
+======================================== */
 
 form{
-max-width:700px;
+max-width:800px;
 margin:auto;
 display:flex;
 flex-direction:column;
@@ -253,29 +327,19 @@ gap:15px;
 
 input,
 textarea{
-padding:14px;
+padding:16px;
 border:none;
 border-radius:8px;
 font-family:inherit;
 }
 
 textarea{
-min-height:140px;
-resize:vertical;
+min-height:150px;
 }
 
-.contact-info{
-margin-top:40px;
-text-align:center;
-}
-
-.contact-info p{
-margin:10px 0;
-}
-
-/* =========================
+/* ========================================
    FOOTER
-========================= */
+======================================== */
 
 footer{
 background:#020617;
@@ -284,44 +348,47 @@ text-align:center;
 color:#94a3b8;
 }
 
-/* =========================
+/* ========================================
    WHATSAPP
-========================= */
+======================================== */
 
 .whatsapp{
 position:fixed;
 bottom:25px;
 right:25px;
-width:60px;
-height:60px;
+width:65px;
+height:65px;
 border-radius:50%;
 background:#25D366;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:28px;
+font-size:30px;
 color:white;
 text-decoration:none;
-box-shadow:0 10px 25px rgba(0,0,0,.4);
 z-index:999;
 }
 
-/* =========================
-   PARTICULAS
-========================= */
+/* ========================================
+   RESPONSIVE
+======================================== */
 
-#particles{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-z-index:1;
-pointer-events:none;
+@media(max-width:1100px){
+
+.hero-content{
+flex-direction:column;
+text-align:center;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+.hero-services{
+grid-template-columns:repeat(2,180px);
+}
+
+.benefits{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
 
 @media(max-width:900px){
 
@@ -331,64 +398,50 @@ display:block;
 
 nav{
 display:none;
-position:absolute;
-top:80px;
-right:0;
-background:#020617;
-width:240px;
-padding:20px;
-flex-direction:column;
 }
 
-nav.active{
-display:flex;
-}
-
-.hero{
-padding-top:140px;
+.header-btn{
+display:none;
 }
 
 .hero h1{
-font-size:40px;
-}
-
-.hero h2{
-font-size:20px;
+font-size:48px;
 }
 
 .hero p{
-font-size:16px;
-}
-
-.section{
-padding:80px 6%;
+font-size:18px;
 }
 
 }
 
-@media(max-width:480px){
+@media(max-width:600px){
 
 .hero{
-background-position:70% center;
+padding-top:130px;
 }
 
 .hero h1{
-font-size:30px;
+font-size:34px;
 }
 
-.hero-buttons{
-flex-direction:column;
+.hero-services{
+grid-template-columns:1fr;
 }
 
-.btn,
-.btn-outline{
-width:100%;
-text-align:center;
+.benefits{
+grid-template-columns:1fr;
 }
 
-.logo span{
-font-size:15px;
+.logo img{
+height:50px;
+}
+
+.logo-text h2{
+font-size:22px;
+}
+
+.logo-text span{
+font-size:18px;
 }
 
 }
-
