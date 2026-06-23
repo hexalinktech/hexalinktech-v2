@@ -1,165 +1,116 @@
-/* ==================================
+/* =========================================
    MENU MOVIL
-================================== */
+========================================= */
 
 const menuToggle = document.querySelector(".menu-toggle");
-const nav = document.querySelector("nav");
+const navMenu = document.querySelector("#navMenu");
 
-if(menuToggle && nav){
+if (menuToggle && navMenu) {
 
-menuToggle.addEventListener("click", () =>{
+    menuToggle.addEventListener("click", () => {
 
-nav.classList.toggle("active");
+        navMenu.classList.toggle("active");
+
+    });
+
+}
+
+/* =========================================
+   CERRAR MENU AL SELECCIONAR OPCION
+========================================= */
+
+const navLinks = document.querySelectorAll("#navMenu a");
+
+navLinks.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        navMenu.classList.remove("active");
+
+    });
 
 });
 
-}
+/* =========================================
+   HEADER SCROLL EFFECT
+========================================= */
 
+window.addEventListener("scroll", () => {
 
-/* ==================================
-   ANIMACIONES DE SCROLL
-================================== */
+    const header = document.querySelector("header");
 
-const observer = new IntersectionObserver((entries)=>{
+    if (window.scrollY > 50) {
 
-entries.forEach(entry=>{
+        header.classList.add("scrolled");
 
-if(entry.isIntersecting){
+    } else {
 
-entry.target.classList.add("show");
+        header.classList.remove("scrolled");
 
-}
-
-});
-
-},{
-threshold:0.15
-});
-
-document.querySelectorAll(".card").forEach(card=>{
-
-observer.observe(card);
+    }
 
 });
 
+/* =========================================
+   REVEAL ON SCROLL
+========================================= */
 
-/* ==================================
-   PARTICULAS HERO
-================================== */
-
-const canvas = document.getElementById("particles");
-
-if(canvas){
-
-const ctx = canvas.getContext("2d");
-
-function resizeCanvas(){
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-}
-
-resizeCanvas();
-
-window.addEventListener("resize", resizeCanvas);
-
-const particles = [];
-
-const PARTICLE_COUNT = 80;
-
-for(let i=0;i<PARTICLE_COUNT;i++){
-
-particles.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-
-vx:(Math.random()-0.5)*0.4,
-vy:(Math.random()-0.5)*0.4,
-
-size:Math.random()*2+1
-
-});
-
-}
-
-function draw(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-particles.forEach(p=>{
-
-p.x += p.vx;
-p.y += p.vy;
-
-if(p.x < 0 || p.x > canvas.width){
-
-p.vx *= -1;
-
-}
-
-if(p.y < 0 || p.y > canvas.height){
-
-p.vy *= -1;
-
-}
-
-ctx.beginPath();
-ctx.arc(
-p.x,
-p.y,
-p.size,
-0,
-Math.PI*2
+const revealElements = document.querySelectorAll(
+".card, .benefit-card, .hex-card"
 );
 
-ctx.fillStyle = "rgba(250,204,21,0.7)";
-ctx.fill();
+const revealObserver = new IntersectionObserver(
+
+(entries) => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            entry.target.classList.add("show");
+
+        }
+
+    });
+
+},
+{
+    threshold: 0.15
+}
+
+);
+
+revealElements.forEach(element => {
+
+    revealObserver.observe(element);
 
 });
 
-for(let i=0;i<particles.length;i++){
+/* =========================================
+   SCROLL SUAVE BOTONES INTERNOS
+========================================= */
 
-for(let j=i+1;j<particles.length;j++){
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
-const dx = particles[i].x - particles[j].x;
-const dy = particles[i].y - particles[j].y;
+    anchor.addEventListener("click", function (e) {
 
-const distance = Math.sqrt(dx*dx + dy*dy);
+        const targetId = this.getAttribute("href");
 
-if(distance < 120){
+        const target = document.querySelector(targetId);
 
-ctx.beginPath();
+        if (target) {
 
-ctx.moveTo(
-particles[i].x,
-particles[i].y
-);
+            e.preventDefault();
 
-ctx.lineTo(
-particles[j].x,
-particles[j].y
-);
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
 
-ctx.strokeStyle =
-`rgba(255,255,255,${
-0.08 - distance/1500
-})`;
+        }
 
-ctx.stroke();
+    });
 
-}
+});
 
-}
-
-}
-
-requestAnimationFrame(draw);
-
-}
-
-draw();
-
-}
-
+console.log("HexaLink Tech v3.0 cargado correctamente");
