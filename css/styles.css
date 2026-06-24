@@ -251,11 +251,11 @@ button {
 .hero-shell {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 0.88fr) minmax(500px, 1.2fr);
+    grid-template-columns: 1fr 600px;
     align-items: center;
-    gap: clamp(30px, 3.5vw, 60px);
+    gap: clamp(24px, 3vw, 50px);
     width: min(100%, var(--max-width));
-    min-height: calc(100vh - 200px);
+    min-height: calc(100vh - 180px);
     margin: 0 auto;
 }
 
@@ -357,163 +357,286 @@ button {
     color: var(--gold);
 }
 
-/* ── HERO SYSTEM (hexagon ring) ── */
-.hero-system {
-    position: relative;
-    min-height: 580px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* ═══════════════════════════════════════════════
+   HERO SYSTEM — Sistema central de hexágonos
+   
+   Arquitectura:
+   .hero-system  →  contenedor de referencia (600×600px, centrado)
+     ::before    →  anillo exterior dorado (560px)
+     ::after     →  anillo interior tenue  (420px)
+   .security-core → escudo centrado con position:absolute
+   .tech-node    →  hexágono con SVG background (evita clip-path border bug)
+     .node-line  →  línea SVG conectora (inyectada vía JS o inline)
+   ═══════════════════════════════════════════════ */
+
+/* ── Variables del sistema ── */
+:root {
+    --ring-outer: 560px;
+    --ring-inner: 410px;
+    --shield-size: 290px;
+    --node-w: 146px;
+    --node-h: 162px;
 }
 
-/* Outer faint ring */
+@keyframes ringPulse {
+    0%, 100% {
+        box-shadow:
+            0 0 0   2px rgba(255, 204, 0, 0.55),
+            0 0 30px 4px rgba(255, 204, 0, 0.18),
+            0 0 80px 8px rgba(255, 204, 0, 0.08);
+    }
+    50% {
+        box-shadow:
+            0 0 0   2px rgba(255, 204, 0, 0.8),
+            0 0 50px 8px rgba(255, 204, 0, 0.28),
+            0 0 120px 16px rgba(255, 204, 0, 0.14);
+    }
+}
+
+@keyframes shieldFloat {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50%       { transform: translate(-50%, -50%) scale(1.035); }
+}
+
+@keyframes shieldGlow {
+    0%, 100% {
+        filter:
+            drop-shadow(0 0 24px rgba(255, 204, 0, 0.85))
+            drop-shadow(0 0 60px rgba(255, 204, 0, 0.5))
+            drop-shadow(0 0 110px rgba(255, 204, 0, 0.3));
+    }
+    50% {
+        filter:
+            drop-shadow(0 0 36px rgba(255, 220, 0, 1))
+            drop-shadow(0 0 90px rgba(255, 204, 0, 0.7))
+            drop-shadow(0 0 150px rgba(255, 204, 0, 0.4));
+    }
+}
+
+/* ── Contenedor del sistema ── */
+.hero-system {
+    /* Tamaño fijo para que los % de posición de nodos sean predecibles */
+    position: relative;
+    width: 600px;
+    height: 600px;
+    flex-shrink: 0;
+    /* Centrado dentro del hero-shell */
+    margin: 0 auto;
+}
+
+/* Anillo exterior — dorado brillante */
 .hero-system::before {
     content: "";
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 540px;
-    height: 540px;
+    width: var(--ring-outer);
+    height: var(--ring-outer);
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    border: 1.5px solid rgba(255, 204, 0, 0.5);
-    box-shadow:
-        0 0 30px rgba(255, 204, 0, 0.2),
-        0 0 80px rgba(255, 204, 0, 0.1),
-        inset 0 0 30px rgba(255, 204, 0, 0.05);
+    border: 1.5px solid rgba(255, 204, 0, 0.65);
+    animation: ringPulse 3.5s ease-in-out infinite;
     pointer-events: none;
-    animation: ringPulse 4s ease-in-out infinite;
+    z-index: 1;
 }
 
-/* Inner ring */
+/* Anillo interior — tenue */
 .hero-system::after {
     content: "";
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 420px;
-    height: 420px;
+    width: var(--ring-inner);
+    height: var(--ring-inner);
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    border: 1px solid rgba(255, 204, 0, 0.22);
+    border: 1px dashed rgba(255, 204, 0, 0.28);
     pointer-events: none;
+    z-index: 1;
 }
 
-@keyframes ringPulse {
-    0%, 100% { box-shadow: 0 0 30px rgba(255, 204, 0, 0.2), 0 0 80px rgba(255, 204, 0, 0.1); }
-    50% { box-shadow: 0 0 50px rgba(255, 204, 0, 0.35), 0 0 120px rgba(255, 204, 0, 0.18); }
-}
-
-@keyframes pulseShield {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 28px rgba(255, 204, 0, 0.9)) drop-shadow(0 0 70px rgba(255, 204, 0, 0.55)) drop-shadow(0 0 130px rgba(255, 204, 0, 0.35)); }
-    50% { transform: translate(-50%, -50%) scale(1.03); filter: drop-shadow(0 0 38px rgba(255, 204, 0, 1)) drop-shadow(0 0 100px rgba(255, 204, 0, 0.7)) drop-shadow(0 0 160px rgba(255, 204, 0, 0.45)); }
-}
-
-/* ── SECURITY CORE (shield) ── */
+/* ── Escudo central ── */
 .security-core {
     position: absolute;
+    /* Centrado exacto relativo a .hero-system */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 220px;
-    height: 220px;
+    width: var(--shield-size);
+    height: var(--shield-size);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 20;
+    /* Animación separada para float y glow (2 elementos) */
+    animation: shieldFloat 4s ease-in-out infinite;
 }
 
 .security-core img {
     width: 100%;
     height: auto;
     display: block;
-    animation: pulseShield 4s ease-in-out infinite;
-    filter:
-        drop-shadow(0 0 28px rgba(255, 204, 0, 0.9))
-        drop-shadow(0 0 70px rgba(255, 204, 0, 0.55))
-        drop-shadow(0 0 130px rgba(255, 204, 0, 0.35));
+    animation: shieldGlow 4s ease-in-out infinite;
+    /* transform viene del padre, aquí solo glow */
 }
 
-/* ── TECH NODES (hexagons) ── */
+/* ── Hexágonos — técnica SVG background para borde real ──
+   clip-path corta el border del elemento en CSS.
+   Solución: usamos un elemento ::before con el fondo+borde simulado
+   mediante un SVG inline como background-image (data URI).
+   Esto da borde dorado REAL visible en todos los navegadores.
+── */
 .tech-node {
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 148px;
-    min-height: 158px;
-    padding: 18px 14px;
+    width: var(--node-w);
+    height: var(--node-h);
     text-align: center;
-    isolation: isolate;
-    gap: 8px;
+    gap: 7px;
+    z-index: 10;
+    /* Sin padding horizontal — el SVG background cubre el área */
+    padding: 20px 12px;
 }
 
+/* Fondo hexagonal con SVG — borde dorado correcto */
 .tech-node::before {
+    content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
-    content: "";
-    background: rgba(5, 12, 35, 0.82);
-    border: 2px solid rgba(250, 204, 21, 0.75);
-    clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0 50%);
-    box-shadow:
-        0 0 20px rgba(250, 204, 21, 0.15),
-        inset 0 0 20px rgba(250, 204, 21, 0.05);
-    transition: border-color 0.3s, box-shadow 0.3s;
+    /* SVG hexágono flat-top con stroke dorado y fill oscuro */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 146 162'%3E%3Cpolygon points='73,4 142,40.5 142,121.5 73,158 4,121.5 4,40.5' fill='rgba(5,12,35,0.88)' stroke='rgba(250,204,21,0.82)' stroke-width='3'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    transition: background-image 0.3s;
+    /* Glow exterior */
+    filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.25));
+    transition: filter 0.3s;
 }
 
 .tech-node:hover::before {
-    border-color: rgba(250, 204, 21, 1);
-    box-shadow: 0 0 35px rgba(250, 204, 21, 0.3), inset 0 0 30px rgba(250, 204, 21, 0.08);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 146 162'%3E%3Cpolygon points='73,4 142,40.5 142,121.5 73,158 4,121.5 4,40.5' fill='rgba(5,12,35,0.92)' stroke='rgba(250,204,21,1)' stroke-width='3.5'/%3E%3C/svg%3E");
+    filter: drop-shadow(0 0 22px rgba(250, 204, 21, 0.55));
 }
 
-/* connector lines */
+/* Línea conectora hacia el centro.
+   Calculada desde el borde del nodo al borde del anillo interior.
+   Cada grupo (izq/der) tiene su dirección y largo específico. */
 .tech-node::after {
+    content: "";
     position: absolute;
     top: 50%;
-    width: 100px;
-    height: 1px;
-    content: "";
-    background: linear-gradient(90deg, transparent, rgba(250, 204, 21, 0.5));
+    height: 1.5px;
+    pointer-events: none;
+    z-index: -1;
+    transform: translateY(-50%);
 }
 
 .tech-node i {
     color: #FFFFFF;
-    font-size: 2.5rem;
+    font-size: 2.4rem;
     line-height: 1;
+    position: relative;
+    z-index: 2;
 }
 
 .tech-node h2 {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
-    line-height: 1.2;
-    max-width: 100px;
-    letter-spacing: 0.06em;
+    line-height: 1.25;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     color: #FFFFFF;
+    position: relative;
+    z-index: 2;
+    max-width: 110px;
 }
 
-/* Node positions — centered on 540px ring */
-.node-redes    { top: 3%;   left: 9%; }
-.node-video    { top: 34%;  left: -1%; }
-.node-servidores { bottom: 1%; left: 9%; }
-.node-acceso   { top: 3%;   right: 9%; }
-.node-ciber    { top: 34%;  right: -1%; }
-.node-respaldo { bottom: 1%; right: 9%; }
+/* ──────────────────────────────────────────────
+   POSICIONES de los 6 nodos sobre la circunferencia de 560px
+   Centro del sistema: (300px, 300px)
+   Radio de posición: ~248px (borde exterior del anillo)
+   
+   Ángulos (punto superior = 270°, sentido horario):
+     Redes         = 330° top-left  → (x= 55px, y= 55px)
+     VideoVigilancia= 210° mid-left  → (x= -5px, y=218px)
+     Servidores    = 150° bot-left  → (x= 55px, y=385px)
+     Control Acceso= 30°  top-right → (x=405px, y= 55px)
+     Ciberseguridad=  330° mid-right → (x=461px, y=218px)  
+     Respaldo      = 210° bot-right → (x=405px, y=385px)
+   
+   Ajustamos para que el centro del nodo quede en esos puntos:
+   left/top = punto - (node-w/2) o (node-h/2)
+─────────────────────────────────────────────── */
 
+/* top-left: Redes */
+.node-redes {
+    top:  16px;
+    left: 30px;
+}
+/* mid-left: Videovigilancia */
+.node-video {
+    top:  calc(50% - calc(var(--node-h) / 2));
+    left: -18px;
+}
+/* bot-left: Servidores */
+.node-servidores {
+    bottom: 16px;
+    left:   30px;
+}
+/* top-right: Control de Acceso */
+.node-acceso {
+    top:   16px;
+    right: 30px;
+}
+/* mid-right: Ciberseguridad */
+.node-ciber {
+    top:   calc(50% - calc(var(--node-h) / 2));
+    right: -18px;
+}
+/* bot-right: Respaldo */
+.node-respaldo {
+    bottom: 16px;
+    right:  30px;
+}
+
+/* ── Líneas conectoras ──
+   Izquierda: línea va hacia la derecha (hacia el centro)
+   Derecha:   línea va hacia la izquierda (hacia el centro)
+   
+   El largo se calcula visualmente para alcanzar el borde del anillo interior.
+   mid-left/right tienen el recorrido más largo (~130px)
+   top/bot tienen diagonal, pero la línea es horizontal (~90px)
+── */
+
+/* Nodos izquierda → línea va a la derecha */
 .node-redes::after,
 .node-video::after,
 .node-servidores::after {
     left: 100%;
+    background: linear-gradient(90deg,
+        rgba(250, 204, 21, 0.7) 0%,
+        rgba(250, 204, 21, 0.15) 100%);
 }
+.node-redes::after     { width: 72px; }
+.node-video::after     { width: 110px; }
+.node-servidores::after { width: 72px; }
 
+/* Nodos derecha → línea va a la izquierda */
 .node-acceso::after,
 .node-ciber::after,
 .node-respaldo::after {
     right: 100%;
-    background: linear-gradient(90deg, rgba(250, 204, 21, 0.5), transparent);
+    background: linear-gradient(90deg,
+        rgba(250, 204, 21, 0.15) 0%,
+        rgba(250, 204, 21, 0.7) 100%);
 }
+.node-acceso::after   { width: 72px; }
+.node-ciber::after    { width: 110px; }
+.node-respaldo::after { width: 72px; }
 
 /* ── TRUST PANEL ── */
 .trust-panel {
@@ -933,21 +1056,28 @@ body.nav-open {
     }
 
     .hero-shell {
-        grid-template-columns: minmax(0, 0.96fr) minmax(440px, 1fr);
+        grid-template-columns: 1fr 520px;
+        gap: 20px;
+    }
+
+    .hero-system {
+        width: 520px;
+        height: 520px;
     }
 
     .tech-node {
-        width: 128px;
-        min-height: 138px;
+        width: 126px;
+        height: 140px;
     }
 
     .tech-node i {
-        font-size: 2.2rem;
+        font-size: 2.1rem;
     }
 
-    .tech-node::after {
-        width: 75px;
-    }
+    .node-redes::after, .node-servidores::after { width: 58px; }
+    .node-video::after { width: 96px; }
+    .node-acceso::after, .node-respaldo::after { width: 58px; }
+    .node-ciber::after { width: 96px; }
 
     .trust-item {
         grid-template-columns: 48px 1fr;
@@ -1028,14 +1158,29 @@ body.nav-open {
         max-width: 720px;
     }
 
+    /* Hero system — escalar en tablet */
     .hero-system {
-        min-height: 480px;
+        width: min(90vw, 520px);
+        height: min(90vw, 520px);
     }
-
     .security-core {
-        width: min(42vw, 260px);
-        height: min(42vw, 260px);
+        --shield-size: min(38vw, 220px);
+        width: var(--shield-size);
+        height: var(--shield-size);
     }
+    .tech-node { --node-w: 118px; --node-h: 132px; width: var(--node-w); height: var(--node-h); }
+    .tech-node i { font-size: 2rem; }
+    .tech-node h2 { font-size: 0.62rem; }
+    .node-redes      { top: 12px;  left: 20px; }
+    .node-video      { top: calc(50% - 66px); left: -14px; }
+    .node-servidores { bottom: 12px; left: 20px; }
+    .node-acceso     { top: 12px;  right: 20px; }
+    .node-ciber      { top: calc(50% - 66px); right: -14px; }
+    .node-respaldo   { bottom: 12px; right: 20px; }
+    .node-redes::after, .node-servidores::after { width: 55px; }
+    .node-video::after { width: 88px; }
+    .node-acceso::after, .node-respaldo::after { width: 55px; }
+    .node-ciber::after { width: 88px; }
 
     .trust-panel,
     .service-grid,
@@ -1099,25 +1244,50 @@ body.nav-open {
     }
 
     .hero-system {
+        /* En mobile: cambiar de sistema radial a grid de tarjetas */
+        position: static;
+        width: 100%;
+        height: auto;
+        min-height: unset;
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-        min-height: auto;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        padding: 8px 0 20px;
     }
 
+    /* Ocultar anillos orbitales en mobile */
+    .hero-system::before,
+    .hero-system::after {
+        display: none;
+    }
+
+    /* Ocultar escudo en mobile */
     .security-core {
         display: none;
     }
 
+    /* Nodos en modo tarjeta */
     .tech-node {
-        position: relative;
-        inset: auto;
-        width: auto;
-        min-height: 120px;
+        position: static !important;
+        inset: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 110px;
+        padding: 16px 10px;
     }
 
+    /* Ocultar líneas conectoras en mobile */
     .tech-node::after {
         display: none;
+    }
+
+    .tech-node i {
+        font-size: 1.9rem;
+    }
+
+    .tech-node h2 {
+        font-size: 0.6rem;
+        letter-spacing: 0.04em;
     }
 
     .trust-panel,
@@ -1174,9 +1344,7 @@ body.nav-open {
         left: 12px;
     }
 
-    .hero-system {
-        grid-template-columns: 1fr;
-    }
+    /* NO sobreescribir hero-system aquí — se controla en 760px */
 
     .trust-item {
         grid-template-columns: 1fr;
