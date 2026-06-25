@@ -8,18 +8,15 @@
     <meta name="keywords" content="HexaLink Tech, infraestructura TI, redes empresariales, videovigilancia, control de acceso, ciberseguridad, servidores, respaldo, continuidad operativa">
     <meta name="author" content="HexaLink Tech">
     <meta name="theme-color" content="#050816">
-
     <meta property="og:title" content="HexaLink Tech | Soluciones Tecnologicas Empresariales">
     <meta property="og:description" content="Ingenieria tecnologica, infraestructura TI y seguridad empresarial para operaciones criticas.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="images/logo-header.png">
-
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -34,13 +31,9 @@
                 <img src="images/logo-header.png" alt="HexaLink Tech Soluciones Tecnologicas">
             </picture>
         </a>
-
         <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menu de navegacion" aria-controls="primaryNav" aria-expanded="false">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
-
         <nav class="primary-nav" id="primaryNav" aria-label="Navegacion principal">
             <a class="nav-link active" href="#inicio">Inicio</a>
             <a class="nav-link" href="#servicios">Servicios</a>
@@ -49,7 +42,6 @@
             <a class="nav-link" href="#porque">&iquest;Por que elegirnos?</a>
             <a class="nav-link" href="#contacto">Contacto</a>
         </nav>
-
         <a class="header-cta" href="#contacto">
             Solicitar Diagnostico
             <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
@@ -62,23 +54,19 @@
             <div class="hero-shade" aria-hidden="true"></div>
 
             <div class="hero-shell">
+                <!-- COLUMNA IZQUIERDA: copy -->
                 <div class="hero-copy reveal">
-                    <div class="hero-tags" aria-label="Especialidades principales">
+                    <div class="hero-tags">
                         <span>Infraestructura</span>
                         <span>Seguridad</span>
                         <span>Confianza</span>
                     </div>
-
                     <h1>
                         Soluciones
                         <span>Tecnologicas</span>
                         <strong>Empresariales</strong>
                     </h1>
-
-                    <p>
-                        Infraestructura TI, redes empresariales, videovigilancia, control de acceso y ciberseguridad para empresas que exigen continuidad, seguridad y rendimiento.
-                    </p>
-
+                    <p>Infraestructura TI, redes empresariales, videovigilancia, control de acceso y ciberseguridad para empresas que exigen continuidad, seguridad y rendimiento.</p>
                     <div class="hero-actions">
                         <a class="btn btn-primary" href="#contacto">
                             <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
@@ -91,31 +79,95 @@
                     </div>
                 </div>
 
+                <!-- COLUMNA DERECHA: sistema orbital -->
                 <div class="hero-system reveal" aria-label="Capacidades tecnologicas">
+
+                    <!-- SVG: anillos + líneas conectoras (z-index bajo, detrás de nodos y escudo) -->
+                    <svg class="orbit-svg" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs>
+                            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="4" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                            <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%"   stop-color="rgba(250,204,21,0.12)"/>
+                                <stop offset="100%" stop-color="rgba(250,204,21,0)"/>
+                            </radialGradient>
+                        </defs>
+
+                        <!-- Halo de fondo dorado -->
+                        <circle cx="340" cy="340" r="315" fill="url(#halo)"/>
+
+                        <!-- Anillo exterior -->
+                        <circle cx="340" cy="340" r="315"
+                            fill="none"
+                            stroke="rgba(250,204,21,0.7)"
+                            stroke-width="1.5"
+                            filter="url(#glow)"/>
+
+                        <!-- Anillo interior punteado -->
+                        <circle cx="340" cy="340" r="225"
+                            fill="none"
+                            stroke="rgba(250,204,21,0.28)"
+                            stroke-width="1"
+                            stroke-dasharray="6 5"/>
+
+                        <!-- ── LÍNEAS CONECTORAS nodo → escudo ── -->
+                        <!-- redes -->
+                        <line x1="145.3" y1="227.6" x2="211.8" y2="266.0" stroke="rgba(250,204,21,0.72)" stroke-width="1.5" stroke-dasharray="5 3"/>
+                        <!-- video -->
+                        <line x1="115.2" y1="340.0" x2="192.0" y2="340.0" stroke="rgba(250,204,21,0.72)" stroke-width="1.5" stroke-dasharray="5 3"/>
+                        <!-- servidores -->
+                        <line x1="145.3" y1="452.4" x2="211.8" y2="414.0" stroke="rgba(250,204,21,0.72)" stroke-width="1.5" stroke-dasharray="5 3"/>
+                        <!-- acceso -->
+                        <line x1="534.7" y1="227.6" x2="468.2" y2="266.0" stroke="rgba(250,204,21,0.72)" stroke-width="1.5" stroke-dasharray="5 3"/>
+                        <!-- ciber -->
+                        <line x1="564.8" y1="340.0" x2="488.0" y2="340.0" stroke="rgba(250,204,21,0.72)" stroke-width="1.5" stroke-dasharray="5 3"/>
+                        <!-- respaldo -->
+                        <line x1="534.7" y1="452.4" x2="468.2" y2="414.0" stroke="rgba(250,204,21,0.72)" stroke-width="1.5" stroke-dasharray="5 3"/>
+
+                        <!-- ── PUNTOS en extremo nodo ── -->
+                        <circle cx="145.3" cy="227.6" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                        <circle cx="115.2" cy="340.0" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                        <circle cx="145.3" cy="452.4" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                        <circle cx="534.7" cy="227.6" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                        <circle cx="564.8" cy="340.0" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                        <circle cx="534.7" cy="452.4" r="4.5" fill="rgba(250,204,21,0.95)"/>
+
+                        <!-- ── PUNTOS en extremo escudo ── -->
+                        <circle cx="211.8" cy="266.0" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                        <circle cx="192.0" cy="340.0" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                        <circle cx="211.8" cy="414.0" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                        <circle cx="468.2" cy="266.0" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                        <circle cx="488.0" cy="340.0" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                        <circle cx="468.2" cy="414.0" r="4.5" fill="rgba(250,204,21,0.95)"/>
+                    </svg>
+
+                    <!-- Escudo central -->
                     <div class="security-core">
-                        <img
-                        src="images/shield-center.png"
-                        alt="HexaLink Shield">
-                </div>
+                        <img src="images/shield-center.png" alt="HexaLink Shield">
+                    </div>
+
+                    <!-- 6 nodos hexagonales -->
                     <article class="tech-node node-redes">
                         <i class="fa-solid fa-network-wired" aria-hidden="true"></i>
                         <h2>Redes</h2>
-                    </article>
-                    <article class="tech-node node-acceso">
-                        <i class="fa-solid fa-fingerprint" aria-hidden="true"></i>
-                        <h2>Control de Acceso</h2>
                     </article>
                     <article class="tech-node node-video">
                         <i class="fa-solid fa-video" aria-hidden="true"></i>
                         <h2>Videovigilancia</h2>
                     </article>
-                    <article class="tech-node node-ciber">
-                        <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
-                        <h2>Ciberseguridad</h2>
-                    </article>
                     <article class="tech-node node-servidores">
                         <i class="fa-solid fa-server" aria-hidden="true"></i>
                         <h2>Servidores</h2>
+                    </article>
+                    <article class="tech-node node-acceso">
+                        <i class="fa-solid fa-fingerprint" aria-hidden="true"></i>
+                        <h2>Control de Acceso</h2>
+                    </article>
+                    <article class="tech-node node-ciber">
+                        <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+                        <h2>Ciberseguridad</h2>
                     </article>
                     <article class="tech-node node-respaldo">
                         <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
@@ -124,7 +176,8 @@
                 </div>
             </div>
 
-            <div class="trust-panel reveal" aria-label="Beneficios principales">
+            <!-- Trust panel -->
+            <div class="trust-panel reveal">
                 <article class="trust-item">
                     <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
                     <div>
@@ -163,7 +216,6 @@
                     <h2>Ingenieria tecnologica para operaciones empresariales.</h2>
                     <p>Disenamos, implementamos y administramos soluciones criticas con foco en disponibilidad, seguridad y crecimiento.</p>
                 </div>
-
                 <div class="service-grid">
                     <article class="service-card reveal">
                         <i class="fa-solid fa-sitemap" aria-hidden="true"></i>
@@ -206,28 +258,18 @@
                     <h2>Una estrategia tecnologica integrada, no piezas aisladas.</h2>
                     <p>Conectamos infraestructura, seguridad fisica, redes y continuidad para que tu operacion tenga una base tecnica confiable.</p>
                 </div>
-
                 <div class="solution-list">
                     <article class="solution-row reveal">
                         <span>01</span>
-                        <div>
-                            <h3>Continuidad Operativa</h3>
-                            <p>Respaldo, disponibilidad y recuperacion para minimizar interrupciones.</p>
-                        </div>
+                        <div><h3>Continuidad Operativa</h3><p>Respaldo, disponibilidad y recuperacion para minimizar interrupciones.</p></div>
                     </article>
                     <article class="solution-row reveal">
                         <span>02</span>
-                        <div>
-                            <h3>Seguridad Integral</h3>
-                            <p>Control de acceso, videovigilancia y ciberseguridad trabajando en conjunto.</p>
-                        </div>
+                        <div><h3>Seguridad Integral</h3><p>Control de acceso, videovigilancia y ciberseguridad trabajando en conjunto.</p></div>
                     </article>
                     <article class="solution-row reveal">
                         <span>03</span>
-                        <div>
-                            <h3>Operacion Escalable</h3>
-                            <p>Infraestructura preparada para nuevas sedes, usuarios, servicios y cargas de trabajo.</p>
-                        </div>
+                        <div><h3>Operacion Escalable</h3><p>Infraestructura preparada para nuevas sedes, usuarios, servicios y cargas de trabajo.</p></div>
                     </article>
                 </div>
             </div>
@@ -240,28 +282,11 @@
                     <h2>De diagnostico tecnico a operacion estable.</h2>
                     <p>Un proceso claro permite tomar decisiones con datos, implementar con control y operar con soporte.</p>
                 </div>
-
                 <div class="process-grid">
-                    <article class="process-step reveal">
-                        <span>01</span>
-                        <h3>Diagnostico</h3>
-                        <p>Levantamiento tecnico, riesgos, prioridades y estado actual de la infraestructura.</p>
-                    </article>
-                    <article class="process-step reveal">
-                        <span>02</span>
-                        <h3>Diseno</h3>
-                        <p>Arquitectura, alcance, materiales, tiempos, costos y criterios de exito.</p>
-                    </article>
-                    <article class="process-step reveal">
-                        <span>03</span>
-                        <h3>Implementacion</h3>
-                        <p>Instalacion, configuracion, pruebas, documentacion y puesta en marcha.</p>
-                    </article>
-                    <article class="process-step reveal">
-                        <span>04</span>
-                        <h3>Soporte</h3>
-                        <p>Monitoreo, atencion tecnica, mantenimiento y mejora continua.</p>
-                    </article>
+                    <article class="process-step reveal"><span>01</span><h3>Diagnostico</h3><p>Levantamiento tecnico, riesgos, prioridades y estado actual de la infraestructura.</p></article>
+                    <article class="process-step reveal"><span>02</span><h3>Diseno</h3><p>Arquitectura, alcance, materiales, tiempos, costos y criterios de exito.</p></article>
+                    <article class="process-step reveal"><span>03</span><h3>Implementacion</h3><p>Instalacion, configuracion, pruebas, documentacion y puesta en marcha.</p></article>
+                    <article class="process-step reveal"><span>04</span><h3>Soporte</h3><p>Monitoreo, atencion tecnica, mantenimiento y mejora continua.</p></article>
                 </div>
             </div>
         </section>
@@ -273,20 +298,10 @@
                     <h2>Precision tecnica con mentalidad empresarial.</h2>
                     <p>HexaLink Tech combina ejecucion en campo, criterio de arquitectura y soporte cercano para proteger lo que mantiene viva tu operacion.</p>
                 </div>
-
                 <div class="why-grid">
-                    <article class="why-card reveal">
-                        <h3>Enfoque de Ingenieria</h3>
-                        <p>Soluciones disenadas con criterios de capacidad, seguridad, mantenimiento y crecimiento.</p>
-                    </article>
-                    <article class="why-card reveal">
-                        <h3>Integracion Real</h3>
-                        <p>Redes, CCTV, acceso, servidores y seguridad como un ecosistema tecnico coherente.</p>
-                    </article>
-                    <article class="why-card reveal">
-                        <h3>Operacion Confiable</h3>
-                        <p>Documentacion, soporte y acompanamiento para que la tecnologia no dependa de improvisaciones.</p>
-                    </article>
+                    <article class="why-card reveal"><h3>Enfoque de Ingenieria</h3><p>Soluciones disenadas con criterios de capacidad, seguridad, mantenimiento y crecimiento.</p></article>
+                    <article class="why-card reveal"><h3>Integracion Real</h3><p>Redes, CCTV, acceso, servidores y seguridad como un ecosistema tecnico coherente.</p></article>
+                    <article class="why-card reveal"><h3>Operacion Confiable</h3><p>Documentacion, soporte y acompanamiento para que la tecnologia no dependa de improvisaciones.</p></article>
                 </div>
             </div>
         </section>
@@ -297,7 +312,6 @@
                     <span class="eyebrow">Contacto</span>
                     <h2>Solicita un diagnostico tecnologico.</h2>
                     <p>Cuentanos que necesitas proteger, conectar o escalar. Te ayudamos a convertirlo en una solucion tecnica clara.</p>
-
                     <div class="contact-direct">
                         <a href="mailto:hexalink.tech@gmail.com">
                             <i class="fa-solid fa-envelope" aria-hidden="true"></i>
@@ -309,20 +323,15 @@
                         </a>
                     </div>
                 </div>
-
                 <form class="contact-form reveal" action="https://formsubmit.co/hexalink.tech@gmail.com" method="POST">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_subject" value="Nuevo prospecto HexaLink Tech">
-
                     <label for="empresa">Empresa</label>
                     <input id="empresa" type="text" name="empresa" placeholder="Nombre de la empresa" required>
-
                     <label for="nombre">Nombre</label>
                     <input id="nombre" type="text" name="nombre" placeholder="Tu nombre" required>
-
                     <label for="correo">Correo</label>
                     <input id="correo" type="email" name="correo" placeholder="correo@empresa.com" required>
-
                     <label for="servicio">Servicio de interes</label>
                     <select id="servicio" name="servicio" required>
                         <option value="">Selecciona una opcion</option>
@@ -333,10 +342,8 @@
                         <option value="Ciberseguridad">Ciberseguridad</option>
                         <option value="Servidores y Respaldo">Servidores y Respaldo</option>
                     </select>
-
                     <label for="mensaje">Mensaje</label>
                     <textarea id="mensaje" name="mensaje" placeholder="Describe tu proyecto o necesidad tecnica"></textarea>
-
                     <button class="btn btn-primary" type="submit">
                         Enviar Solicitud
                         <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
